@@ -4,9 +4,11 @@ import GameSetupScreen from './screens/GameSetupScreen';
 import GameScreen from './screens/GameScreen';
 import EndgameSummaryScreen from './screens/EndgameSummaryScreen';
 import type { AppScreen } from './types/navigation';
+import type { GameState } from './types/game';
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState<AppScreen>('mainMenu');
+  const [gameState, setGameState] = useState<GameState | null>(null);
 
   const content = useMemo(() => {
     switch (currentScreen) {
@@ -16,12 +18,16 @@ export default function App() {
         return (
           <GameSetupScreen
             onBack={() => setCurrentScreen('mainMenu')}
-            onContinue={() => setCurrentScreen('game')}
+            onGameCreated={(nextGameState) => {
+              setGameState(nextGameState);
+              setCurrentScreen('game');
+            }}
           />
         );
       case 'game':
         return (
           <GameScreen
+            gameState={gameState}
             onBackToSetup={() => setCurrentScreen('gameSetup')}
             onFinishGame={() => setCurrentScreen('endgameSummary')}
           />
@@ -31,7 +37,7 @@ export default function App() {
       default:
         return null;
     }
-  }, [currentScreen]);
+  }, [currentScreen, gameState]);
 
   return <div className="app-shell">{content}</div>;
 }

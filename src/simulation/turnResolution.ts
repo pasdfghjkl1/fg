@@ -1,6 +1,8 @@
 import type { Debt, Player } from '../types/game';
 import { calculateFreeTime, calculateStress, clamp, FREE_TIME_MAX, FREE_TIME_MIN, roundCurrency, STRESS_MAX, STRESS_MIN } from './formulas';
 
+const MONTHS_PER_YEAR = 12;
+
 export interface YearlyImpact {
   cashDelta?: number;
   stressDelta?: number;
@@ -56,7 +58,8 @@ export function applyDebtPayments(debts: Debt[], availableCash: number): DebtPay
     const interestAccrued = roundCurrency((principalBeforeInterest * debt.interestRateAnnual) / 100);
     const principalAfterInterest = principalBeforeInterest + interestAccrued;
 
-    const scheduledPayment = Math.min(debt.minimumPayment, principalAfterInterest);
+    const scheduledPaymentAnnual = roundCurrency(debt.minimumPayment * MONTHS_PER_YEAR);
+    const scheduledPayment = Math.min(scheduledPaymentAnnual, principalAfterInterest);
     const paidAmount = Math.max(0, Math.min(scheduledPayment, remainingCash));
 
     remainingCash = roundCurrency(remainingCash - paidAmount);

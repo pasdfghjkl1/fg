@@ -1,5 +1,4 @@
 import ScreenLayout from '../components/ScreenLayout';
-import { getTargetEndAge } from '../data/gameSetup';
 import { sampleProfessions } from '../data/professions';
 import type { GameState } from '../types/game';
 
@@ -30,8 +29,7 @@ export default function GameScreen({ gameState, onBackToSetup, onFinishGame }: G
       <div className="card stack">
         <p>
           <strong>Match:</strong> {gameState.players.length} players • {gameState.settings.gameLength} length
-          • Start age {gameState.settings.startingAge} • End age{' '}
-          {getTargetEndAge(gameState.settings.gameLength)}
+          • Start age {gameState.settings.startingAge} • End age {gameState.settings.endingAge}
         </p>
 
         <div className="setup-grid">

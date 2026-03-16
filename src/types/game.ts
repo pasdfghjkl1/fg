@@ -44,6 +44,7 @@ export interface Debt {
   name: string;
   principalRemaining: number;
   interestRateAnnual: number;
+  // Standard recurring minimum payment amount expected per month.
   minimumPayment: number;
 }
 

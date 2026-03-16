@@ -19,7 +19,11 @@ export function createDefaultGameSettings(gameLength: GameLength = 'standard'): 
 }
 
 export function createSamplePlayer(id: string, name: string, professionId: string): Player {
-  const profession = sampleProfessions.find((item) => item.id === professionId) ?? sampleProfessions[0];
+  const profession = sampleProfessions.find((item) => item.id === professionId);
+
+  if (!profession) {
+    throw new Error(`Profession with id "${professionId}" not found.`);
+  }
 
   return {
     id,
@@ -58,9 +62,9 @@ export function createSampleGameState(): GameState {
     currentPlayerIndex: 0,
     currentPhase: 'startOfTurn',
     players,
-    availableProfessions: sampleProfessions,
-    availableAssets: sampleAssets,
-    availableLifeEvents: sampleLifeEvents,
+    availableProfessions: [...sampleProfessions],
+    availableAssets: [...sampleAssets],
+    availableLifeEvents: [...sampleLifeEvents],
     log: [
       {
         id: 'log-1',

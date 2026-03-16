@@ -29,6 +29,7 @@ export default function App() {
           <GameScreen
             gameState={gameState}
             onBackToSetup={() => setCurrentScreen('gameSetup')}
+            onGameStateChange={setGameState}
             onFinishGame={() => setCurrentScreen('endgameSummary')}
           />
         );

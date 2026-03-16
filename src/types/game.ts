@@ -10,10 +10,10 @@ export type AssetCategory =
 
 export type TurnPhase =
   | 'startOfTurn'
-  | 'income'
-  | 'decision'
-  | 'lifeEvent'
-  | 'endOfTurn';
+  | 'finance'
+  | 'event'
+  | 'action'
+  | 'endTurn';
 
 export type GameLength = 'short' | 'standard' | 'long';
 
